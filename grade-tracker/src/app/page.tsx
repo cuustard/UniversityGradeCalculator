@@ -16,10 +16,12 @@ export default function Home() {
     <div className="flex min-h-screen">
       <Sidebar currentPage={page} onNavigate={setPage} />
       <main className="flex-1 overflow-auto">
-        {page === 'dashboard'   && <Dashboard />}
-        {page === 'modules'     && <ModuleList />}
-        {page === 'calculator'  && <RequiredGrades />}
-        {page === 'reference'   && <ReferenceTables />}
+        <div className="max-w-5xl mx-auto">
+          {page === 'dashboard'   && <Dashboard />}
+          {page === 'modules'     && <ModuleList />}
+          {page === 'calculator'  && <RequiredGrades />}
+          {page === 'reference'   && <ReferenceTables />}
+        </div>
       </main>
     </div>
   );

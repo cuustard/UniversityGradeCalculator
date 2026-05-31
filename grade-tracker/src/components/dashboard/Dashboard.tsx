@@ -104,7 +104,7 @@ export default function Dashboard() {
           <h2 className="text-[16px] font-medium mb-4 tracking-tight">
             Module Performance
           </h2>
-          <div className="h-55">
+          <div className="h-56">
             <ModuleChart modules={modules} />
           </div>
         </div>

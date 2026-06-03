@@ -37,7 +37,7 @@ export default function ModuleChart({ modules }: Props) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height={224}>
       <BarChart data={data} margin={{ top: 4, right: 44, bottom: 0, left: -8 }}>
 
         {/* Subtle horizontal grid lines */}

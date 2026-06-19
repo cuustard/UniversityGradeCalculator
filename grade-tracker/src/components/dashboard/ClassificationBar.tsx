@@ -177,9 +177,9 @@ export default function ClassificationBar({ agg }: Props) {
       >
         {[
           { label: "Fail <9", bg: "#c0392b20", border: "#c0392b40" },
-          { label: "Third 9–11.49", bg: "#d4843a20", border: "#d4843a40" },
-          { label: "2:2 11.5–14.49", bg: "#3d997020", border: "#3d997040" },
-          { label: "2:1 14.5–17.49", bg: "#3a7bd530", border: "#3a7bd550" },
+          { label: "Third 9–11.0", bg: "#d4843a20", border: "#d4843a40" },
+          { label: "2:2 11.5–14.0", bg: "#3d997020", border: "#3d997040" },
+          { label: "2:1 14.5–17.0", bg: "#3a7bd530", border: "#3a7bd550" },
           { label: "1st ≥17.5", bg: "#7c6ee030", border: "#7c6ee050" },
         ].map((l) => (
           <span key={l.label} className="flex items-center gap-1">

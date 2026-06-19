@@ -17,7 +17,9 @@ across any device.
 3. **Authentication → URL Configuration → Redirect URLs**: add
    `http://localhost:3000/**` (and your production URL later, e.g.
    `https://your-app.vercel.app/**`). The email provider is enabled by default.
-4. **Project Settings → API**: copy the **Project URL** and **anon public** key.
+4. **Project Settings → API Keys**: copy the **Project URL** and the **publishable** key
+   (`sb_publishable_...`). You do **not** need the secret key — this app is fully client/SSR
+   and relies on Row Level Security, so the secret key is never used.
 
 ### 2. Configure environment variables
 
@@ -29,7 +31,7 @@ cp .env.example .env.local
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxxxxxxxxxxxxxx
 ```
 
 ### 3. Run
@@ -48,7 +50,7 @@ enter your email, click the magic link, and you're in.
 ## Deploy (Vercel)
 
 1. Push to GitHub and import the repo into [Vercel](https://vercel.com/new).
-2. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` as environment variables.
+2. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` as environment variables.
 3. Add your Vercel domain to the Supabase **Redirect URLs** (step 1.3 above).
 
 ## How it works

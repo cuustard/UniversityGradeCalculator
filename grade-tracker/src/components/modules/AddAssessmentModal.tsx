@@ -107,15 +107,15 @@ export default function AddAssessmentModal({ moduleId, usedWeight, onClose }: Pr
               </select>
             ) : (
               <>
-                <input className="gt-input" type="number" placeholder="e.g. 72" min={0} max={100} step={1} value={pct} onChange={e => setPct(e.target.value)} />
-                <p className="text-[11px] mt-1.5" style={{ color: 'var(--text3)' }}>Enter as a whole number. Per Lancaster regulations, decimals are rounded to the nearest integer before conversion.</p>
+                <input className="gt-input" type="number" placeholder="e.g. 72.5" min={0} max={100} step={0.1} value={pct} onChange={e => setPct(e.target.value)} />
+                <p className="text-[11px] mt-1.5" style={{ color: 'var(--text3)' }}>Decimals are allowed — converted to an aggregation score by interpolation, matching the portal.</p>
               </>
             )}
           </>
         ) : (
           <>
-            <input className="gt-input" type="number" placeholder="e.g. 65" min={0} max={100} step={1} value={examPct} onChange={e => setExamPct(e.target.value)} />
-            <p className="text-[11px] mt-1.5" style={{ color: 'var(--text3)' }}>Enter as a whole number. Per Lancaster regulations, decimals are rounded to the nearest integer before conversion.</p>
+            <input className="gt-input" type="number" placeholder="e.g. 65.5" min={0} max={100} step={0.1} value={examPct} onChange={e => setExamPct(e.target.value)} />
+            <p className="text-[11px] mt-1.5" style={{ color: 'var(--text3)' }}>Decimals are allowed — converted to an aggregation score by interpolation, matching the portal.</p>
           </>
         )}
       </div>

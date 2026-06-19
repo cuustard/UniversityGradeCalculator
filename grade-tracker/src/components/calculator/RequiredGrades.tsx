@@ -167,7 +167,7 @@ export default function RequiredGrades() {
 
             {/* Gauge */}
             <div className="flex justify-center mb-1">
-              <div className="w-45">
+              <div className="w-[180px]">
                 <GaugeDial agg={currentAgg} />
               </div>
             </div>

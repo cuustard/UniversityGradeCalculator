@@ -10,7 +10,6 @@ import EnterGradeModal from './EnterGradeModal';
 
 interface Props {
   module: Module;
-  index: number;
 }
 
 export default function ModuleCard({ module }: Props) {
@@ -129,7 +128,7 @@ export default function ModuleCard({ module }: Props) {
                                 <Pencil size={11} /> Grade
                               </button>
                             )}
-                            <button className="gt-btn-danger gt-btn-sm" onClick={() => removeAssessment(module.id, a.id)}>
+                            <button className="gt-btn-danger gt-btn-sm" onClick={(e) => { e.stopPropagation(); if (confirm(`Remove "${a.name}"?`)) removeAssessment(module.id, a.id); }}>
                               <Trash2 size={11} />
                             </button>
                           </div>

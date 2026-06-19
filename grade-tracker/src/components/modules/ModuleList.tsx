@@ -30,7 +30,7 @@ export default function ModuleList() {
           <div className="text-[12px] mt-1.5" style={{ color: 'var(--text3)' }}>Add your first module to get started</div>
         </div>
       ) : (
-        modules.map((m, i) => <ModuleCard key={m.id} module={m} index={i} />)
+        modules.map((m) => <ModuleCard key={m.id} module={m} />)
       )}
 
       {showModal && <AddModuleModal onClose={() => setShowModal(false)} />}

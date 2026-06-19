@@ -162,14 +162,9 @@ export function aggToPct(targetAgg: number): number | null {
  * Uses the 40-80% linear formula directly (valid for typical degree averages).
  */
 export function aggToExactPct(agg: number): number {
-  if (agg >= 9 && agg <= 21) {
-    // Linear range covers Third → First (40–80%)
-    // Find which linear region we're in
-    if (agg <= 9) return 40 - (9 - agg) / 0.225; // below 40%
-    if (agg <= 21) return 40 + (agg - 9) / 0.3; // 40–80%
-  }
+  if (agg >= 9 && agg <= 21) return 40 + (agg - 9) / 0.3; // 40–80%
   if (agg > 21) return 80 + (agg - 21) / 0.15; // above 80%
-  return agg / 0.225; // below 9
+  return agg / 0.225; // below 9 (under 40%)
 }
 
 export function getClassification(agg: number): ClassificationBoundary {

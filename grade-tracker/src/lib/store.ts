@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { AppState, Assessment, GradeType, Module } from './types';
+import { AppState } from './types';
 
 function uid() {
-  return Math.random().toString(36).slice(2, 10);
+  return crypto.randomUUID();
 }
 
 export const useStore = create<AppState>()(
@@ -51,6 +51,6 @@ export const useStore = create<AppState>()(
           ),
         })),
     }),
-    { name: 'gradetrack-v3' }
+    { name: 'gradetrack-v3', version: 1 }
   )
 );

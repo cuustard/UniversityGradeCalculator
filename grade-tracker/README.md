@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GradeTrack
 
-## Getting Started
+A university grade tracker that converts coursework/exam grades into Lancaster
+aggregation scores and degree classifications. Built with Next.js, Zustand, Recharts
+and Tailwind, with **Supabase accounts (magic-link sign-in)** so your grades sync
+across any device.
 
-First, run the development server:
+## Setup
+
+### 1. Create a Supabase project
+
+1. Create a project at [supabase.com](https://supabase.com).
+2. In the **SQL Editor**, run the migration in
+   [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql). This creates
+   the `modules` and `assessments` tables and the Row Level Security policies that scope
+   every row to its owner.
+3. **Authentication → URL Configuration → Redirect URLs**: add
+   `http://localhost:3000/**` (and your production URL later, e.g.
+   `https://your-app.vercel.app/**`). The email provider is enabled by default.
+4. **Project Settings → API**: copy the **Project URL** and **anon public** key.
+
+### 2. Configure environment variables
+
+Copy `.env.example` to `.env.local` and paste in the two values:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000). You'll be redirected to `/login`;
+enter your email, click the magic link, and you're in.
 
-To learn more about Next.js, take a look at the following resources:
+> **Email limits:** Supabase's built-in email has a low send rate, which is fine for
+> personal use. For real usage configure custom SMTP under **Authentication → Emails → SMTP**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push to GitHub and import the repo into [Vercel](https://vercel.com/new).
+2. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` as environment variables.
+3. Add your Vercel domain to the Supabase **Redirect URLs** (step 1.3 above).
 
-## Deploy on Vercel
+## How it works
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/lib/gradeUtils.ts` — grade/aggregation math (Lancaster UG Assessment Regulations).
+- `src/lib/store.ts` — Zustand store backed by Supabase: loads your rows on open and
+  writes through on every edit.
+- `src/lib/supabase/` — browser and server Supabase clients (`@supabase/ssr`).
+- `src/proxy.ts` — session refresh + auth gate (redirects to `/login` when signed out).
+- `src/app/login`, `src/app/auth/confirm` — magic-link sign-in flow.

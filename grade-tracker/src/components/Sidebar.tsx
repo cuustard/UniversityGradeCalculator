@@ -1,11 +1,15 @@
 'use client';
 
-import { LayoutDashboard, Book, Calculator, Table } from 'lucide-react';
-import { Page } from '@/app/page';
+import { LayoutDashboard, Book, Calculator, Table, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Page } from '@/components/AppShell';
+import { createClient } from '@/lib/supabase/client';
+import { useStore } from '@/lib/store';
 
 interface Props {
   currentPage: Page;
   onNavigate: (page: Page) => void;
+  userEmail: string;
 }
 
 const navItems: { page: Page; label: string; icon: React.ReactNode }[] = [
@@ -15,7 +19,16 @@ const navItems: { page: Page; label: string; icon: React.ReactNode }[] = [
   { page: 'reference',  label: 'Grade Tables',    icon: <Table size={16} /> },
 ];
 
-export default function Sidebar({ currentPage, onNavigate }: Props) {
+export default function Sidebar({ currentPage, onNavigate, userEmail }: Props) {
+  const router = useRouter();
+
+  async function handleSignOut() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    useStore.getState().reset();
+    router.push('/login');
+  }
+
   return (
     <nav
       className="w-[220px] flex-shrink-0 flex flex-col sticky top-0 h-screen"
@@ -43,6 +56,26 @@ export default function Sidebar({ currentPage, onNavigate }: Props) {
         {navItems.slice(3).map((item) => (
           <NavItem key={item.page} {...item} active={currentPage === item.page} onNavigate={onNavigate} />
         ))}
+      </div>
+
+      {/* Account footer */}
+      <div className="mt-auto px-5 py-4" style={{ borderTop: '1px solid var(--border)' }}>
+        {userEmail && (
+          <div
+            className="text-[11px] mb-2 truncate"
+            style={{ color: 'var(--text3)' }}
+            title={userEmail}
+          >
+            {userEmail}
+          </div>
+        )}
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-2 w-full text-[12px] transition-colors text-left"
+          style={{ color: 'var(--text2)' }}
+        >
+          <LogOut size={14} /> Sign out
+        </button>
       </div>
 
       <style jsx>{`

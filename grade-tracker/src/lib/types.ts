@@ -19,11 +19,35 @@ export interface Module {
 
 export interface AppState {
   modules: Module[];
+  loaded: boolean;
+  load: () => Promise<void>;
+  reset: () => void;
   addModule: (name: string, credits: number) => void;
   removeModule: (id: string) => void;
   addAssessment: (moduleId: string, assessment: Omit<Assessment, 'id'>) => void;
   removeAssessment: (moduleId: string, assessmentId: string) => void;
   updateAssessmentGrade: (moduleId: string, assessmentId: string, grade: string | number, gradeType: GradeType) => void;
+}
+
+// ── Database row shapes (Supabase) ──────────────────────────────────────────
+export interface ModuleRow {
+  id: string;
+  user_id: string;
+  name: string;
+  credits: number;
+  created_at: string;
+}
+
+export interface AssessmentRow {
+  id: string;
+  module_id: string;
+  user_id: string;
+  name: string;
+  type: AssessmentType;
+  weight: number;
+  grade: string | null; // raw text; parse to number when grade_type === 'pct'
+  grade_type: GradeType | null;
+  created_at: string;
 }
 
 export interface ClassificationBoundary {
